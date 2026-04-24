@@ -12,8 +12,8 @@ from config import (
 
 
 class NewsService:
-    TOP_HEADLINES_URL = "https://gnews.io/api/v4/top-headlines"
-    SEARCH_URL = "https://gnews.io/api/v4/search"
+    TOP_HEADLINES_URL = "https://newsapi.org/v2/top-headlines"
+    SEARCH_URL = "https://newsapi.org/v2/everything"
 
     def __init__(self, api_key: str = NEWS_API_KEY) -> None:
         self.api_key = api_key
@@ -27,7 +27,7 @@ class NewsService:
         language: str = LANGUAGE,
     ) -> List[Dict]:
         """
-        Fetch the latest headlines from GNews.
+        Fetch the latest headlines from NewsAPI.org.
         """
         if not self.api_key:
             raise RuntimeError(
@@ -35,9 +35,9 @@ class NewsService:
             )
 
         params = {
-            "lang": language,
-            "max": max_headlines,
-            "apikey": self.api_key,
+            "apiKey": self.api_key,
+            "pageSize": max_headlines,
+            "language": language,
         }
         
         if query:
