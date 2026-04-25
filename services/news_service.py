@@ -68,7 +68,13 @@ class NewsService:
         except requests.exceptions.HTTPError as error:
             details = ""
             try:
-                details = response.json().get("errors", "")
+                error_data = response.json()
+                if "message" in error_data:
+                    details = error_data["message"]
+                elif "error" in error_data:
+                    details = error_data["error"]
+                else:
+                    details = response.text
             except Exception:
                 details = response.text
             raise RuntimeError(f"News API request failed: {details}") from error

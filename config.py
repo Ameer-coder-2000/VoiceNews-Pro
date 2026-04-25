@@ -11,6 +11,12 @@ except ImportError:
         return None
 
 
+# Try to load from .env.local first for local development
+try:
+    load_dotenv('.env.local')
+except:
+    pass
+# Fallback to standard .env
 load_dotenv()
 
 
